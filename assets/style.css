@@ -31,7 +31,7 @@ body {
   
   .time-block {
     text-align: center;
-    border-radius: 15px;
+    border-radius: 7px;
   }
   
   .row {
@@ -50,16 +50,19 @@ body {
   .past {
     background-color: #d3d3d3;
     color: white;
+    border: 1px solid black;
   }
   
   .present {
     background-color: #ff6961;
     color: white;
+    border: 1px solid black;
   }
   
   .future {
     background-color: #77dd77;
     color: white;
+    border: 1px solid black;
   }
   
   .saveBtn {

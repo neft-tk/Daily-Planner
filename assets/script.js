@@ -1,13 +1,15 @@
-var nineAm = document.getElementById('block-1');
-var tenAm = document.getElementById('block-2');
-var elevenAm = document.getElementById('block-3');
-var twelveAm = document.getElementById('block-4');
-var onePm = document.getElementById('block-5');
-var twoPm = document.getElementById('block-6');
-var threePm = document.getElementById('block-7');
-var fourPm = document.getElementById('block-8');
-var fivePm = document.getElementById('block-9');
+var blockOneInput = $('#09');
+var blockTwoInput = $('#10');
+var blockThreeInput = $('#11');
+var blockFourInput = $('#12');
+var blockFiveInput = $('#13');
+var blockSixInput = $('#14');
+var blockSevenInput = $('#15');
+var blockEightInput = $('#16');
+var blockNineInput = $('#17');
 
+
+var saveButton = $('.saveBtn');
 var timeDisplay = $("#currentDay");
 
 // Moment method that grabs us the current time and then displays it at the id location on our html
@@ -17,15 +19,62 @@ function displayTime() {
 };
 
 
-// Changes the color of the text area boxes based on the hour of the day
-// get the current hour
-// if current hour = id, change to red
-function hourColor() {
-    if (today.format("h")) {
-        onePm.children(1).setAttribute('style', 'background color', 'red');
+// Color changing function
+// gets the current hour in military time 
+// grabs all the id's with text-area
+// runs a loop based on how many items were grabbed and gives a class depending on the id of that text-area
+// if the text-area id is less than the current value of the hour (military time) then it is given the past class which changes the background to gray, if the text-area id is greater then it turns the background green, and if they're equal it'll turn the background red.
+// NOTE: the id's were given double-digit values (ex: 9am is 09) so that the military time can accurately compare itself to the hour values 
+let getTime = function () {
+    var currentTime = moment().format("HH");
+    var textAreaEl = $(".text-area");
+
+
+    for (var i = 0; i < textAreaEl.length; i++) {
+        var elID = textAreaEl[i].id;
+        console.log(elID);
+        var getID = document.getElementById(textAreaEl[i].id);
+
+        $(textAreaEl[i].id).removeClass(".present .past .future");
+
+        if (elID < currentTime) {
+            $(getID).addClass("past");
+        } else if (elID > currentTime) {
+            $(getID).addClass("future");
+        } else {
+            $(getID).addClass("present");
+        }
     }
-};
+}
+
+
+// TODO: local storage stuff
+// make an object, user
+// give object 9 elements
+// map them to the right locations
+// make save button?
+
+saveButton.on('click', function(event) {
+    event.preventDefault();
+
+    var user = {
+        block1: blockOneInput.value.trim(),
+        block2: blockTwoInput.value.trim(),
+        block3: blockThreeInput.value.trim(),
+        block4: blockFourInput.value.trim(),
+        block5: blockFiveInput.value.trim(),
+        block6: blockSixInput.value.trim(),
+        block7: blockSevenInput.value.trim(),
+        block8: blockEightInput.value.trim(),
+        block9: blockNineInput.value.trim()
+    };
+
+    localStorage.setItem("user", JSON.stringify(user));
+});
+
 
 
 // starts the time and resets it every second so the page has a smooth updated time
 setInterval(displayTime,1000);
+//checks every 2 minutes what the time is so it can refresh the background colors of the text areas
+setInterval(getTime(), (1000 * 60) * 2);
