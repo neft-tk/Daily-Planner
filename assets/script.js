@@ -48,9 +48,6 @@ let getTime = function () {
 }
 
 
-// TODO: local storage stuff
-
-
 // Save blocks - grabs the contents of the textareas at the specified locations and creates an object with them
 // saves the object to local storage
 function saveBlocks() {
