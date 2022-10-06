@@ -1,12 +1,12 @@
-var blockOneInput = $('#09');
-var blockTwoInput = $('#10');
-var blockThreeInput = $('#11');
-var blockFourInput = $('#12');
-var blockFiveInput = $('#13');
-var blockSixInput = $('#14');
-var blockSevenInput = $('#15');
-var blockEightInput = $('#16');
-var blockNineInput = $('#17');
+var blockOneValue = $('#09');
+var blockTwoValue = $('#10');
+var blockThreeValue = $('#11');
+var blockFourValue = $('#12');
+var blockFiveValue = $('#13');
+var blockSixValue = $('#14');
+var blockSevenValue = $('#15');
+var blockEightValue = $('#16');
+var blockNineValue = $('#17');
 
 
 var saveButton = $('.saveBtn');
@@ -49,46 +49,68 @@ let getTime = function () {
 
 
 // TODO: local storage stuff
-// make an object, user
-// give object 9 elements
-// map them to the right locations
-// make save button?
 
-saveButton.on('click', saveBlocks) 
 
+// Save blocks - grabs the contents of the textareas at the specified locations and creates an object with them
+// saves the object to local storage
 function saveBlocks() {
 
+    var blockOneValue = $('#09');
+    var blockTwoValue = $('#10');
+    var blockThreeValue = $('#11');
+    var blockFourValue = $('#12');
+    var blockFiveValue = $('#13');
+    var blockSixValue = $('#14');
+    var blockSevenValue = $('#15');
+    var blockEightValue = $('#16');
+    var blockNineValue = $('#17');
+
     var user = {
-        block1: blockOneInput,
-        block2: blockTwoInput,
-        block3: blockThreeInput,
-        block4: blockFourInput,
-        block5: blockFiveInput,
-        block6: blockSixInput,
-        block7: blockSevenInput,
-        block8: blockEightInput,
-        block9: blockNineInput
+        block1: blockOneValue.val(),
+        block2: blockTwoValue.val(),
+        block3: blockThreeValue.val(),
+        block4: blockFourValue.val(),
+        block5: blockFiveValue.val(),
+        block6: blockSixValue.val(),
+        block7: blockSevenValue.val(),
+        block8: blockEightValue.val(),
+        block9: blockNineValue.val()
     };
-
-    console.log(user);
-
 
     localStorage.setItem("user", JSON.stringify(user));
 
 };
 
-// block1.textContent = localStorage.getItem('user');
-// input_textarea.value = localStorage.getItem('content');
+// loadBlocks - turns user back into an object
+// if there is nothing in the object or no object to return, then nothing happens
+// if there -is- something in the object/if there is an object, then if there are any values saved locally for each block should appear on the page again
+function loadBlocks() {
+    var lastUser = JSON.parse(localStorage.getItem("user"));
+    if (lastUser !== null) {
+        $('#09').val(lastUser.block1);
+        $('#10').val(lastUser.block2);
+        $('#11').val(lastUser.block3);
+        $('#12').val(lastUser.block4);
+        $('#13').val(lastUser.block5);
+        $('#14').val(lastUser.block6);
+        $('#15').val(lastUser.block7);
+        $('#16').val(lastUser.block8);
+        $('#17').val(lastUser.block9);
+    } else return;
+};
 
-// function updateOutput() {
-// 	localStorage.setItem('content', input_textarea.value);
-	
-// 	output_div.textContent = input_textarea.value;
-// }
 
+// calls on loadBlocks when the page loads
+$(document).ready(function(){
+    loadBlocks();
+});
 
 
 // starts the time and resets it every second so the page has a smooth updated time
 setInterval(displayTime,1000);
 //checks every 2 minutes what the time is so it can refresh the background colors of the text areas
 setInterval(getTime(), (1000 * 60) * 2);
+
+
+// addEventListener to run saveBlocks when the save button is clicked/submitted
+saveButton.on('click', saveBlocks);
