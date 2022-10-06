@@ -54,23 +54,37 @@ let getTime = function () {
 // map them to the right locations
 // make save button?
 
-saveButton.on('click', function(event) {
-    event.preventDefault();
+saveButton.on('click', saveBlocks) 
+
+function saveBlocks() {
 
     var user = {
-        block1: blockOneInput.value.trim(),
-        block2: blockTwoInput.value.trim(),
-        block3: blockThreeInput.value.trim(),
-        block4: blockFourInput.value.trim(),
-        block5: blockFiveInput.value.trim(),
-        block6: blockSixInput.value.trim(),
-        block7: blockSevenInput.value.trim(),
-        block8: blockEightInput.value.trim(),
-        block9: blockNineInput.value.trim()
+        block1: blockOneInput,
+        block2: blockTwoInput,
+        block3: blockThreeInput,
+        block4: blockFourInput,
+        block5: blockFiveInput,
+        block6: blockSixInput,
+        block7: blockSevenInput,
+        block8: blockEightInput,
+        block9: blockNineInput
     };
 
+    console.log(user);
+
+
     localStorage.setItem("user", JSON.stringify(user));
-});
+
+};
+
+// block1.textContent = localStorage.getItem('user');
+// input_textarea.value = localStorage.getItem('content');
+
+// function updateOutput() {
+// 	localStorage.setItem('content', input_textarea.value);
+	
+// 	output_div.textContent = input_textarea.value;
+// }
 
 
 
